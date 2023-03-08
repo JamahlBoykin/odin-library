@@ -1,0 +1,38 @@
+/* Wrapper */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Footer */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 4px;
+  gap: 4px;
+  font-size: 0.875rem;
+  
+  .footer-github {
+    height: 24px;
+  }
+}
+
+/* Main */
+
+.main {
+  flex: 1;
+}
+
