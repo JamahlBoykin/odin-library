@@ -251,3 +251,55 @@ body {
 .main {
   flex: 1;
 }
+.main #new_book_form {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -160px;
+  margin-left: -160px;
+  width: 320px;
+  height: 320px;
+  background-color: grey;
+  padding: 16px;
+  gap: 8px;
+}
+.main #new_book_form h1 {
+  text-align: center;
+}
+.main #new_book_form #close-form {
+  cursor: pointer;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: 24px;
+  width: 38px;
+  height: 38px;
+}
+.main #new_book_form input[type=text],
+.main #new_book_form input[type=number] {
+  width: 100%;
+}
+.main #new_book_form label[for=book-title],
+.main #new_book_form label[for=book-author],
+.main #new_book_form label[for=book-pages] {
+  display: none;
+}
+.main #new_book_form div.read {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.main #new_book_form div.read input[type=checkbox] {
+  width: 32px;
+  height: 32px;
+}
+.main #new_book_form button[type=submit] {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

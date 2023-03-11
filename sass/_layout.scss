@@ -1,3 +1,6 @@
+@use './abstracts' as *;
+@use './components';
+
 /* Wrapper */
 
 .wrapper {
@@ -24,7 +27,7 @@
   padding: 4px;
   gap: 4px;
   font-size: 0.875rem;
-  
+
   .footer-github {
     height: 24px;
   }
@@ -34,5 +37,64 @@
 
 .main {
   flex: 1;
-}
 
+  #new_book_form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: calc($new-book-size / -2);
+    margin-left: calc($new-book-size / -2);
+    width: $new-book-size;
+    height: $new-book-size;
+    background-color: grey;
+    padding: 16px;
+    gap: 8px;
+
+    h1 {
+      text-align: center;
+    }
+
+    #close-form {
+      cursor: pointer;
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: none;
+      border: none;
+      font-weight: bold;
+      font-size: 24px;
+      width: 38px;
+      height: 38px;
+    }
+
+    input[type='text'],
+    input[type='number'] {
+      width: 100%;
+    }
+
+    label[for='book-title'],
+    label[for='book-author'],
+    label[for='book-pages'] {
+      display: none;
+    }
+
+    div.read {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+
+      input[type='checkbox'] {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    button[type='submit'] {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
