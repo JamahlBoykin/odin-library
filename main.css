@@ -248,8 +248,44 @@ body {
 }
 
 /* Main */
+.fade-bg {
+  display: none;
+  position: fixed;
+  min-height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
 .main {
   flex: 1;
+}
+.main .delete-confirmation {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -160px;
+  margin-left: -160px;
+  width: 320px;
+  height: 320px;
+  background-color: grey;
+  padding: 16px;
+  gap: 8px;
+}
+.main .delete-confirmation h1 {
+  grid-column: span 2;
+  font-size: 1.5rem;
+}
+.main .delete-confirmation button {
+  font-size: 1.23rem;
+  margin: 8px;
+}
+.main .book {
+  background-color: cadetblue;
+  width: 300px;
+  height: 180px;
+  margin: 8px;
 }
 .main #new_book_form {
   display: none;

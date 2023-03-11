@@ -18,9 +18,19 @@
 
   <body>
     <div class="wrapper">
+      <div class="fade-bg"></div>
+
       <header class="header">Library</header>
 
       <main class="main">
+        <div class="delete-confirmation">
+          <h1 class="confirmation-text">
+            Are you sure you want to remove "Lord of the Rings"?
+          </h1>
+          <button class="yes-button">Yes</button>
+          <button class="no-button">No</button>
+        </div>
+
         <button onclick="openForm()">New Book</button>
 
         <form id="new_book_form" action="./index.html" method="post">

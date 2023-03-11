@@ -35,8 +35,48 @@
 
 /* Main */
 
+.fade-bg {
+  display: none;
+  position: fixed;
+  min-height: 100%;
+  width: 100%;
+  background-color: rgb(0 0 0 / 75%);
+}
+
 .main {
   flex: 1;
+
+  .delete-confirmation {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: calc($new-book-size / -2);
+    margin-left: calc($new-book-size / -2);
+    width: $new-book-size;
+    height: $new-book-size;
+    background-color: grey;
+    padding: 16px;
+    gap: 8px;
+
+    h1 {
+      grid-column: span 2;
+      font-size: 1.5rem;
+    }
+
+    button {
+      font-size: 1.23rem;
+      margin: 8px;
+    }
+  }
+
+  .book {
+    background-color: cadetblue;
+    width: 300px;
+    height: 180px;
+    margin: 8px;
+  }
 
   #new_book_form {
     display: none;
