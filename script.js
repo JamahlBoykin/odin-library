@@ -13,14 +13,31 @@ function Book(title, author, pages, read, ID) {
 }
 
 Book.prototype.info = function () {
-  let pageText = 'pages';
-  if (this.pages === '1') pageText = 'page';
+  const bookTitle = document.createElement('div');
+  bookTitle.classList.add('title-text');
+  bookTitle.textContent = this.title;
 
-  if (this.read) {
-    return `${this.title} by ${this.author}, ${this.pages} ${pageText}, read.`;
+  const bookAuthor = document.createElement('div');
+  bookAuthor.classList.add('author-text');
+  bookAuthor.textContent = 'by ' + this.author;
+
+  const bookPages = document.createElement('div');
+  bookPages.classList.add('pages-text');
+  if (this.pages !== '1') {
+    bookPages.textContent = this.pages + ' pages.';
+  } else {
+    bookPages.textContent = this.pages + ' page.';
   }
 
-  return `${this.title} by ${this.author}, ${this.pages} ${pageText}, not read yet.`;
+  const bookRead = document.createElement('div');
+  bookRead.classList.add('read-text');
+  if (this.read) {
+    bookRead.textContent = 'Finished reading.';
+  } else {
+    bookRead.textContent = 'Not read yet.';
+  }
+
+  return [bookTitle, bookAuthor, bookPages, bookRead];
 };
 
 function addBookToLibrary(title, author, pages, read) {
@@ -36,13 +53,21 @@ function displayBooks() {
     const book = document.createElement('div');
     book.classList.add('book');
     book.setAttribute('data-id', myLibrary[displayCount].ID);
-    book.textContent = myLibrary[displayCount].info();
+    myLibrary[displayCount].info().forEach((element) => {
+      book.appendChild(element);
+    });
+
+    const readCheckbox = document.createElement('input');
+    readCheckbox.setAttribute('type', 'checkbox');
+    if (myLibrary[displayCount].read) readCheckbox.checked = true;
+    readCheckbox.addEventListener('click', updateReadText);
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
     deleteButton.addEventListener('click', confirmBookRemoval);
 
     main.appendChild(book);
+    book.appendChild(readCheckbox);
     book.appendChild(deleteButton);
   }
 }
@@ -77,10 +102,34 @@ function submitForm(event) {
 
 addBookForm.addEventListener('submit', submitForm);
 
+function updateReadText(bookInfo) {
+  bookInfo.target.className += 'bookFinder';
+  const book = document.querySelector('.book:has(.bookFinder)');
+  book.querySelector('.bookFinder').classList.remove('bookFinder');
+
+  const bookIndex = myLibrary.findIndex(
+    ({ ID }) => ID === Number(book.getAttribute('data-id'))
+  );
+
+  if (myLibrary[bookIndex].read === false) {
+    myLibrary[bookIndex].read = true;
+  } else {
+    myLibrary[bookIndex].read = false;
+  }
+
+  let readText = book.querySelector('.read-text');
+  if (readText.textContent === 'Not read yet.') {
+    readText.textContent = 'Finished reading.';
+  } else {
+    readText.textContent = 'Not read yet.';
+  }
+}
+
 function confirmBookRemoval(bookInfo) {
   bookInfo.target.className += 'bookFinder';
   const book = document.querySelector('.book:has(.bookFinder)');
   book.querySelector('.bookFinder').classList.remove('bookFinder');
+
   const bookIndex = myLibrary.findIndex(
     ({ ID }) => ID === Number(book.getAttribute('data-id'))
   );
