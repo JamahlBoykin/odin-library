@@ -20,7 +20,10 @@
     <div class="wrapper">
       <div class="fade-bg"></div>
 
-      <header class="header">Library</header>
+      <header class="header">
+        <h1 class="header-text">Library</h1>
+        <button onclick="openForm()">New Book</button>
+      </header>
 
       <main class="main">
         <div class="delete-confirmation">
@@ -31,10 +34,8 @@
           <button class="no-button">No</button>
         </div>
 
-        <button onclick="openForm()">New Book</button>
-
         <form id="new_book_form" action="./index.html" method="post">
-          <h1>Add Book</h1>
+          <h1>New Book</h1>
 
           <button type="button" id="close-form" onclick="closeForm()">×</button>
 

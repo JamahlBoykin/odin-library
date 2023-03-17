@@ -12,9 +12,25 @@
 /* Header */
 
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: min-content max-content;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  position: sticky;
+  top: 0;
+  height: 64px;
+  background-color: mix(white, $bg-color, 5%);
+  box-shadow: 0 0px 8px 0px black;
+
+  h1 {
+    text-shadow: 0px 0px 5px black;
+  }
+
+  button {
+    @extend %button;
+    background-color: white;
+    box-shadow: 0 0 5px 0px black;
+  }
 }
 
 /* Footer */
@@ -36,66 +52,109 @@
 /* Main */
 
 .fade-bg {
-  display: none;
   position: fixed;
   min-height: 100%;
   width: 100%;
-  background-color: rgb(0 0 0 / 75%);
+  background-color: rgb(0, 0, 0, 0);
+  transition: all 0.3s ease-in 0s;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .main {
   flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(216px, 320px));
+  grid-auto-rows: max-content;
+  justify-content: space-evenly;
+  margin: 8px;
 
   .delete-confirmation {
-    display: none;
+    @extend %popup;
     grid-template-columns: 1fr 1fr;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-top: calc($new-book-size / -2);
-    margin-left: calc($new-book-size / -2);
-    width: $new-book-size;
-    height: $new-book-size;
-    background-color: grey;
-    padding: 16px;
-    gap: 8px;
+    align-content: space-between;
 
     h1 {
+      @extend %scrollbar;
+      overflow: auto;
       grid-column: span 2;
       font-size: 1.5rem;
     }
 
     button {
+      @extend %button;
+      background-color: white;
       font-size: 1.23rem;
+      height: 48px;
       margin: 8px;
     }
   }
 
   .book {
-    background-color: cadetblue;
-    width: 300px;
-    height: 180px;
+    background-color: mix(white, $bg-color, 10%);
+    box-shadow: 0 0 8px -3px black;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
     margin: 8px;
+    padding: 12px;
+    border-radius: 4px;
+
+    .title-text,
+    .author-text,
+    .pages-text {
+      grid-column: span 2;
+    }
+
+    button {
+      @extend %button;
+      background-color: $bg-color;
+      color: white;
+      align-self: end;
+      width: 90%;
+    }
+
+    input[type='checkbox'] {
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      align-self: end;
+      width: 90%;
+
+      &:before {
+        content: 'Unread';
+        background-color: rgb(250 128 114);
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        border-radius: 4px;
+        padding: 3px 9px 3px 8px;
+        -webkit-transition: 0.3s;
+        transition: 0.3s;
+        transition-timing-function: cubic-bezier(0.4, 0.42, 0, 0.92);
+      }
+
+      &:checked:before {
+        content: 'Read';
+        background-color: rgb(128 250 114);
+      }
+    }
   }
 
   #new_book_form {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-top: calc($new-book-size / -2);
-    margin-left: calc($new-book-size / -2);
-    width: $new-book-size;
-    height: $new-book-size;
-    background-color: grey;
-    padding: 16px;
-    gap: 8px;
+    @extend %popup;
+    grid-template-rows: 1fr 1fr 1fr 1fr 0.8fr 1fr;
 
     h1 {
+      text-shadow: 0px 0px 3px black;
       text-align: center;
     }
 
     #close-form {
+      color: white;
       cursor: pointer;
       position: absolute;
       top: 2px;
@@ -111,6 +170,9 @@
     input[type='text'],
     input[type='number'] {
       width: 100%;
+      border: none;
+      border-radius: 4px;
+      padding: 2px 4px;
     }
 
     label[for='book-title'],
@@ -126,12 +188,16 @@
       gap: 8px;
 
       input[type='checkbox'] {
+        cursor: pointer;
         width: 32px;
         height: 32px;
       }
     }
 
     button[type='submit'] {
+      @extend %button;
+      background-color: white;
+      cursor: pointer;
       display: block;
       margin-left: auto;
       margin-right: auto;

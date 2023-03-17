@@ -4,18 +4,18 @@ const addBookForm = document.getElementById('new_book_form');
 const yesButton = document.querySelector('.yes-button');
 const noButton = document.querySelector('.no-button');
 
-function Book(title, author, pages, read, ID) {
+function Book(title, author, pages, read, id) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
-  this.ID = ID;
+  this.id = id;
 }
 
 Book.prototype.info = function () {
   const bookTitle = document.createElement('div');
   bookTitle.classList.add('title-text');
-  bookTitle.textContent = this.title;
+  bookTitle.textContent = '"' + this.title + '"';
 
   const bookAuthor = document.createElement('div');
   bookAuthor.classList.add('author-text');
@@ -24,20 +24,20 @@ Book.prototype.info = function () {
   const bookPages = document.createElement('div');
   bookPages.classList.add('pages-text');
   if (this.pages !== '1') {
-    bookPages.textContent = this.pages + ' pages.';
+    bookPages.textContent = this.pages + ' pages';
   } else {
-    bookPages.textContent = this.pages + ' page.';
+    bookPages.textContent = this.pages + ' page';
   }
 
-  const bookRead = document.createElement('div');
-  bookRead.classList.add('read-text');
-  if (this.read) {
-    bookRead.textContent = 'Finished reading.';
-  } else {
-    bookRead.textContent = 'Not read yet.';
-  }
+  // const bookRead = document.createElement('div');
+  // bookRead.classList.add('read-text');
+  // if (this.read) {
+  //   bookRead.textContent = 'Finished reading.';
+  // } else {
+  //   bookRead.textContent = 'Not read yet.';
+  // }
 
-  return [bookTitle, bookAuthor, bookPages, bookRead];
+  return [bookTitle, bookAuthor, bookPages];
 };
 
 function addBookToLibrary(title, author, pages, read) {
@@ -52,7 +52,7 @@ function displayBooks() {
   for (; displayCount < myLibrary.length; displayCount++) {
     const book = document.createElement('div');
     book.classList.add('book');
-    book.setAttribute('data-id', myLibrary[displayCount].ID);
+    book.setAttribute('data-id', myLibrary[displayCount].id);
     myLibrary[displayCount].info().forEach((element) => {
       book.appendChild(element);
     });
@@ -60,7 +60,7 @@ function displayBooks() {
     const readCheckbox = document.createElement('input');
     readCheckbox.setAttribute('type', 'checkbox');
     if (myLibrary[displayCount].read) readCheckbox.checked = true;
-    readCheckbox.addEventListener('click', updateReadText);
+    readCheckbox.addEventListener('click', updateReadStatus);
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
@@ -73,13 +73,16 @@ function displayBooks() {
 }
 
 function openForm() {
-  document.getElementById('new_book_form').style.display = 'grid';
-  document.querySelector('.fade-bg').style.display = 'block';
+  document.querySelector('.fade-bg').style.backgroundColor =
+    'rgb(0, 0, 0, 0.75)';
+  document.querySelector('.fade-bg').style.pointerEvents = 'inherit';
+  document.getElementById('new_book_form').style.top = '50%';
 }
 
 function closeForm() {
-  document.getElementById('new_book_form').style.display = 'none';
-  document.querySelector('.fade-bg').style.display = 'none';
+  document.querySelector('.fade-bg').style.backgroundColor = 'rgb(0, 0, 0, 0)';
+  document.querySelector('.fade-bg').style.pointerEvents = 'none';
+  document.getElementById('new_book_form').style.top = 'calc(100% + 160px)';
   addBookForm
     .querySelectorAll('input[type="text"], input[type="number"]')
     .forEach((input) => {
@@ -102,13 +105,13 @@ function submitForm(event) {
 
 addBookForm.addEventListener('submit', submitForm);
 
-function updateReadText(bookInfo) {
+function updateReadStatus(bookInfo) {
   bookInfo.target.className += 'bookFinder';
   const book = document.querySelector('.book:has(.bookFinder)');
   book.querySelector('.bookFinder').classList.remove('bookFinder');
 
   const bookIndex = myLibrary.findIndex(
-    ({ ID }) => ID === Number(book.getAttribute('data-id'))
+    ({ id }) => id === Number(book.getAttribute('data-id'))
   );
 
   if (myLibrary[bookIndex].read === false) {
@@ -117,12 +120,12 @@ function updateReadText(bookInfo) {
     myLibrary[bookIndex].read = false;
   }
 
-  let readText = book.querySelector('.read-text');
-  if (readText.textContent === 'Not read yet.') {
-    readText.textContent = 'Finished reading.';
-  } else {
-    readText.textContent = 'Not read yet.';
-  }
+  // let readText = book.querySelector('.read-text');
+  // if (readText.textContent === 'Not read yet.') {
+  //   readText.textContent = 'Finished reading.';
+  // } else {
+  //   readText.textContent = 'Not read yet.';
+  // }
 }
 
 function confirmBookRemoval(bookInfo) {
@@ -131,13 +134,15 @@ function confirmBookRemoval(bookInfo) {
   book.querySelector('.bookFinder').classList.remove('bookFinder');
 
   const bookIndex = myLibrary.findIndex(
-    ({ ID }) => ID === Number(book.getAttribute('data-id'))
+    ({ id }) => id === Number(book.getAttribute('data-id'))
   );
 
   document.querySelector('.confirmation-text').textContent =
     'Are you sure you want to remove "' + myLibrary[bookIndex].title + '"?';
-  document.querySelector('.fade-bg').style.display = 'block';
-  document.querySelector('.delete-confirmation').style.display = 'grid';
+  document.querySelector('.fade-bg').style.backgroundColor =
+    'rgb(0, 0, 0, 0.75)';
+  document.querySelector('.fade-bg').style.pointerEvents = 'inherit';
+  document.querySelector('.delete-confirmation').style.top = '50%';
 
   function removeBook() {
     myLibrary.splice(bookIndex, 1);
@@ -147,9 +152,11 @@ function confirmBookRemoval(bookInfo) {
 
   function closeConfirmation() {
     yesButton.removeEventListener('click', removeBook);
-    document.querySelector('.confirmation-text').textContent = '';
-    document.querySelector('.fade-bg').style.display = 'none';
-    document.querySelector('.delete-confirmation').style.display = 'none';
+    document.querySelector('.fade-bg').style.backgroundColor =
+      'rgb(0, 0, 0, 0)';
+    document.querySelector('.fade-bg').style.pointerEvents = 'none';
+    document.querySelector('.delete-confirmation').style.top =
+      'calc(100% + 160px)';
   }
 
   yesButton.addEventListener('click', removeBook);
